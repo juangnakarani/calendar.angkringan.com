@@ -92,7 +92,7 @@
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Vuetify.js'
+        title: 'Calendar Angkringan'
       }
     }
   }
