@@ -2,8 +2,11 @@ package main
 
 import (
 	"log"
+	"net/http"
+	"time"
 
 	"github.com/fsnotify/fsnotify"
+	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 )
 
@@ -39,6 +42,29 @@ func init() {
 	loadConfiguration()
 }
 
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	if origin := r.Header.Get("Origin"); origin != "" {
+		log.Println("test print origin->", origin)
+		w.Header().Set("Access-Control-Allow-Origin", origin)
+		// w.Header().Set("Access-Control-Allow-Credentials", "true")
+	}
+
+}
+
 func main() {
 	log.Println("starting calendar...")
+
+	r := mux.NewRouter()
+
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("../../ui/dist/")))
+
+	srv := &http.Server{
+		Handler: r,
+		Addr:    "127.0.0.1:8000",
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
+	log.Fatal(srv.ListenAndServe())
 }
