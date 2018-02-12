@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -18,6 +19,7 @@ type Configuration struct {
 var config = new(Configuration)
 
 func loadConfiguration() {
+	log.Println("loading configuration...")
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
 	err := viper.ReadInConfig() // Find and read the config file
@@ -33,9 +35,6 @@ func loadConfiguration() {
 
 	config.address = viper.Get("address").(string)
 	config.port = viper.Get("port").(int)
-
-	log.Printf("->>%s\n", config.address)
-	log.Printf("->>%v\n", config.port)
 }
 
 func init() {
@@ -52,15 +51,19 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	log.Println("starting calendar...")
+	log.Println("starting server...")
+	log.Printf("address: %s", config.address)
+	log.Printf("port: %v", config.port)
 
 	r := mux.NewRouter()
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("../../ui/dist/")))
 
+	conf := fmt.Sprintf("%s:%v", config.address, config.port)
+
 	srv := &http.Server{
 		Handler: r,
-		Addr:    "127.0.0.1:8000",
+		Addr:    conf,
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,

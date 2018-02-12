@@ -1,39 +1,45 @@
 <template>
   <v-app>
     <v-navigation-drawer
-      fixed
       :mini-variant="miniVariant"
       :clipped="clipped"
       v-model="drawer"
       app
+      fixed
     >
-      <v-list>
-        <v-list-tile 
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-          exact
-        >
-          <v-list-tile-action>
-            <v-icon v-html="item.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
+    <v-layout justify-center>
+      <!-- <v-flex xs12> -->
+        <v-date-picker color="blue lighten-2" v-model="picker" no-title scrollable actions></v-date-picker>
+      <!-- </v-flex> -->
+      </v-layout>
+  
+    <v-expansion-panel flat expand>
+    <v-expansion-panel-content v-bind:value="1">
+      <div class="subheading" slot="header">Acaraku</div>
+      <v-card flat>
+            <div class="ml-2">
+              <v-checkbox color="green" label="Baca Quran" v-model="rightcheck" light hide-details></v-checkbox>
+            <v-checkbox color="red" label="Tahu Tech" v-model="rightcheck" light hide-details></v-checkbox>
+            <v-checkbox color="blue" label="Coding" v-model="rightcheck" light hide-details></v-checkbox>
+            <v-checkbox color="yellow" label="Dolan" v-model="rightcheck" light hide-details></v-checkbox>
+            </div>
+        </v-card>
+    </v-expansion-panel-content>
+    <v-expansion-panel-content>
+      <div class="subheading" slot="header">Acara dia</div>
+      <v-card flat>
+          <div class="ml-2">
+            <v-checkbox color="blue" label="Dolan tipis" v-model="rightcheck" light hide-details></v-checkbox>
+            <v-checkbox color="red" label="Dolan tenan" v-model="rightcheck" light hide-details></v-checkbox>
+          </div>
+        </v-card>
+    </v-expansion-panel-content>
+  </v-expansion-panel>
+   
+      
     </v-navigation-drawer>
     <v-toolbar fixed app :clipped-left="clipped">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>web</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>remove</v-icon>
-      </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
@@ -41,21 +47,7 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <v-container fluid>
-        <v-slide-y-transition mode="out-in">
-          <v-layout column align-center>
-            <img src="/static/v.png" alt="Vuetify.js" class="mb-5" />
-            <blockquote>
-              &#8220;First, solve the problem. Then, write the code.&#8221;
-              <footer>
-                <small>
-                  <em>&mdash;John Johnson</em>
-                </small>
-              </footer>
-            </blockquote>
-          </v-layout>
-        </v-slide-y-transition>
-      </v-container>
+      <router-view></router-view>
     </v-content>
     <v-navigation-drawer
       temporary
@@ -73,27 +65,30 @@
       </v-list>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
+      <span>&copy; 2017 Cah Angkringan</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        clipped: false,
-        drawer: true,
-        fixed: false,
-        items: [{
-          icon: 'bubble_chart',
-          title: 'Inspire'
-        }],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
-        title: 'Calendar Angkringan'
-      }
-    }
+export default {
+  data() {
+    return {
+      clipped: true,
+      drawer: true,
+      fixed: true,
+      items: [
+        {
+          icon: "bubble_chart",
+          title: "Inspire"
+        }
+      ],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: "Calendar Angkringan",
+      rightcheck: []
+    };
   }
+};
 </script>
