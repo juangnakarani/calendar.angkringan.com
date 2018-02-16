@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	rice "github.com/GeertJohan/go.rice"
 	"github.com/fsnotify/fsnotify"
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
@@ -57,7 +58,9 @@ func main() {
 
 	r := mux.NewRouter()
 
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("../../ui/dist/")))
+	// r.PathPrefix("/").Handler(http.FileServer(http.Dir("../../ui/dist/")))
+	r.PathPrefix("/assets").Handler(http.FileServer(rice.MustFindBox("../../ui/src/").HTTPBox()))
+	r.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("../../ui/dist/").HTTPBox()))
 
 	conf := fmt.Sprintf("%s:%v", config.address, config.port)
 

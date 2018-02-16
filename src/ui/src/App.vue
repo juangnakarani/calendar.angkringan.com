@@ -43,8 +43,9 @@
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>menu</v-icon>
+        <v-icon>account_circle</v-icon>
       </v-btn>
+       <!-- <v-text>Cah Angkringan</v-text> -->
     </v-toolbar>
     <v-content>
       <router-view></router-view>
@@ -55,14 +56,37 @@
       v-model="rightDrawer"
       fixed
     >
-      <v-list>
-        <v-list-tile @click.native="right = !right">
-          <v-list-tile-action>
-            <v-icon>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
+      <v-list two-line>
+          <!-- <template> -->
+        <v-list-tile>
+         <v-list-tile-avatar>
+            <img src="/assets/anu.png">
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+          <v-list-tile-title>Cah Angkringan</v-list-tile-title>
+          <v-list-tile-sub-title class="text--primary">admin.angkringan@gmail.com</v-list-tile-sub-title>
+        </v-list-tile-content>
         </v-list-tile>
+<v-divider></v-divider>
+
+          <!-- </template> -->
       </v-list>
+       <v-card>
+        <!-- <v-card-media src="/static/doc-images/cards/desert.jpg" height="200px">
+        </v-card-media> -->
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
+            <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
+          </div>
+        </v-card-title>
+        <v-card-actions>
+            <v-layout justify-space-around>
+          <v-btn flat color="blue">My Account</v-btn>
+          <v-btn flat color="blue">Logout</v-btn>
+            </v-layout>
+        </v-card-actions>
+      </v-card>
     </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
       <span>&copy; 2017 Cah Angkringan</span>
