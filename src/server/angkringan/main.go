@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"path"
+	"strings"
 	"time"
 
 	rice "github.com/GeertJohan/go.rice"
@@ -51,6 +53,25 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// Handler return a http.Handler that supports Vue Router app with history mode
+func VueHandler(dist string) http.Handler {
+	box := rice.MustFindBox("../../ui/dist/").HTTPBox() //look repeating param but is ok. It must literal
+	handler := http.FileServer(box)
+
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		url := req.URL.String()
+		// log.Println("check url")
+		// static files
+		if strings.Contains(url, ".") || url == "/" {
+			handler.ServeHTTP(w, req)
+			return
+		}
+
+		// the all 404 gonna be served as root
+		// http.ServeFile(w, req, path.Join(publicDir, "/index.html"))
+		http.ServeFile(w, req, path.Join(dist, "/index.html"))
+	})
+}
 func main() {
 	log.Println("starting server...")
 	log.Printf("address: %s", config.address)
@@ -60,8 +81,9 @@ func main() {
 
 	// r.PathPrefix("/").Handler(http.FileServer(http.Dir("../../ui/dist/")))
 	r.PathPrefix("/assets").Handler(http.FileServer(rice.MustFindBox("../../ui/src/").HTTPBox()))
-	r.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("../../ui/dist/").HTTPBox()))
-
+	// r.PathPrefix("/").Handler(http.FileServer(rice.MustFindBox("../../ui/dist/").HTTPBox()))
+	// box := rice.MustFindBox("../../ui/dist/").HTTPBox()
+	r.PathPrefix("/").Handler(VueHandler("../../ui/dist/"))
 	conf := fmt.Sprintf("%s:%v", config.address, config.port)
 
 	srv := &http.Server{

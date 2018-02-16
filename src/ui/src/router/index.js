@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import TimeTable from '@/components/TimeTable'
+import TimeList from '@/components/TimeList'
 
 Vue.use(Router)
 
@@ -8,9 +8,9 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'TimeTable',
-      component: TimeTable
+      path: '/list',
+      name: 'TimeList',
+      component: TimeList
     }
   ]
 })

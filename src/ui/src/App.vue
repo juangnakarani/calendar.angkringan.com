@@ -38,17 +38,22 @@
    
       
     </v-navigation-drawer>
-    <v-toolbar fixed app :clipped-left="clipped">
+    <v-toolbar fixed app :clipped-left="clipped" color="light-blue lighten-1">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-text-field prepend-icon="search" hide-details single-line></v-text-field>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>account_circle</v-icon>
+        <v-icon>more_vert</v-icon>
       </v-btn>
        <!-- <v-text>Cah Angkringan</v-text> -->
     </v-toolbar>
     <v-content>
+      <!-- <v-container fluid>
+        <transition mode="out-in"> -->
       <router-view></router-view>
+      <!-- </transition>
+      </v-container> -->
     </v-content>
     <v-navigation-drawer
       temporary
@@ -60,7 +65,7 @@
           <!-- <template> -->
         <v-list-tile>
          <v-list-tile-avatar>
-            <img src="/assets/anu.png">
+            <img src="/assets/nella.png">
           </v-list-tile-avatar>
           <v-list-tile-content>
           <v-list-tile-title>Cah Angkringan</v-list-tile-title>
@@ -76,20 +81,21 @@
         </v-card-media> -->
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-            <div>Located two hours south of Sydney in the <br>Southern Highlands of New South Wales, ...</div>
+            <h3 class="headline mb-0">User detail</h3>
+            <div>Lorem ipsum dolor sit amet amet <br>Lorem ipsum dolor sit amet amet nuwun sewu</div>
           </div>
         </v-card-title>
         <v-card-actions>
             <v-layout justify-space-around>
-          <v-btn flat color="blue">My Account</v-btn>
+          <v-btn flat color="blue" @click="push()">My Account</v-btn>
           <v-btn flat color="blue">Logout</v-btn>
             </v-layout>
         </v-card-actions>
       </v-card>
     </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2017 Cah Angkringan</span>
+    <v-footer :fixed="fixed" app class="pa-3">
+      <v-spacer></v-spacer>
+      <span>&copy; {{ new Date().getFullYear() }} Cah Angkringan</span>
     </v-footer>
   </v-app>
 </template>
@@ -98,21 +104,21 @@
 export default {
   data() {
     return {
+      picker: null,
       clipped: true,
       drawer: true,
       fixed: true,
-      items: [
-        {
-          icon: "bubble_chart",
-          title: "Inspire"
-        }
-      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: "Calendar Angkringan",
       rightcheck: []
     };
+  },
+  methods: {
+    push() {
+      this.$router.push("/list");
+    }
   }
 };
 </script>
