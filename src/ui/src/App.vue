@@ -18,10 +18,10 @@
       <div class="subheading" slot="header">Acaraku</div>
       <v-card flat>
             <div class="ml-2">
-              <v-checkbox color="green" label="Baca Quran" v-model="rightcheck" light hide-details></v-checkbox>
-            <v-checkbox color="red" label="Tahu Tech" v-model="rightcheck" light hide-details></v-checkbox>
-            <v-checkbox color="blue" label="Coding" v-model="rightcheck" light hide-details></v-checkbox>
-            <v-checkbox color="yellow" label="Dolan" v-model="rightcheck" light hide-details></v-checkbox>
+              <v-checkbox color="green" label="Tangi" v-model="rightcheck.acaraku1" light hide-details></v-checkbox>
+            <v-checkbox color="red" label="Tahu Tech" v-model="rightcheck.acaraku2" light hide-details></v-checkbox>
+            <v-checkbox color="blue" label="Coding" v-model="rightcheck.acaraku3" light hide-details></v-checkbox>
+            <v-checkbox color="yellow" label="Dolan" v-model="rightcheck.acaraku4" light hide-details></v-checkbox>
             </div>
         </v-card>
     </v-expansion-panel-content>
@@ -29,8 +29,8 @@
       <div class="subheading" slot="header">Acara dia</div>
       <v-card flat>
           <div class="ml-2">
-            <v-checkbox color="blue" label="Dolan tipis" v-model="rightcheck" light hide-details></v-checkbox>
-            <v-checkbox color="red" label="Dolan tenan" v-model="rightcheck" light hide-details></v-checkbox>
+            <v-checkbox color="blue" label="Dolan tipis" v-model="rightcheck.acaradia1" light hide-details></v-checkbox>
+            <v-checkbox color="red" label="Dolan tenan" v-model="rightcheck.acaradia2" light hide-details></v-checkbox>
           </div>
         </v-card>
     </v-expansion-panel-content>
@@ -38,7 +38,7 @@
    
       
     </v-navigation-drawer>
-    <v-toolbar fixed app :clipped-left="clipped" color="light-blue lighten-1">
+    <v-toolbar fixed app :clipped-left="clipped" color="blue lighten-1">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
@@ -68,8 +68,8 @@
             <img src="/assets/nella.png">
           </v-list-tile-avatar>
           <v-list-tile-content>
-          <v-list-tile-title>Cah Angkringan</v-list-tile-title>
-          <v-list-tile-sub-title class="text--primary">admin.angkringan@gmail.com</v-list-tile-sub-title>
+          <v-list-tile-title>Telo</v-list-tile-title>
+          <v-list-tile-sub-title class="text--primary">cah.angkringan@gmail.com</v-list-tile-sub-title>
         </v-list-tile-content>
         </v-list-tile>
 <v-divider></v-divider>
@@ -112,12 +112,27 @@ export default {
       right: true,
       rightDrawer: false,
       title: "Calendar Angkringan",
-      rightcheck: []
+      rightcheck: {
+        acaraku1: true,
+        acaraku2: true,
+        acaraku3: true,
+        acaraku4: false,
+        acaradia1: true,
+        acaradia2: true,
+      }
     };
   },
   methods: {
     push() {
-      this.$router.push("/list");
+      this.$router.push("/myaccount");
+    },
+    gohome(){
+      this.$router.push("/");
+    }
+  },
+  watch: {
+    picker: function(){
+      this.gohome()
     }
   }
 };
